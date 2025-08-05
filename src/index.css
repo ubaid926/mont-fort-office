@@ -1,24 +1,46 @@
 @import "tailwindcss";
 
-.blueTextColor{
-    color:  #a3bacd !important;
-}
-.blueLogoColor{
-    color:  #2d628c !important;
+.blueTextColor {
+    color: #a3bacd !important;
 }
 
-.blueTextColor:hover{
+.blueLogoColor {
+    color: #2d628c !important;
+}
+
+.blueTextColor:hover {
     color: #2d628c !important;
 }
 
 .dropdown-toggle::after {
-  display: none !important; 
+    display: none !important;
 }
 
-.blueBgColor{
+.blueBgColor {
     background-color: #2d628c;
 }
 
-.hovered:hover{
+.hovered:hover {
     border-bottom: 2px solid #2d628c;
+}
+
+.navbgWhite {
+    background-color: white !important;
+    border-radius: 5px;
+}
+
+
+.logo {
+    font-size: 10px;
+}
+
+/* .navbar{
+    padding: 18px !important;
+    background-color: aqua !important;
+} */
+
+body {
+    background-image: url("../images/premium_photo-1667689956673-8737a299aa8c.avif");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
