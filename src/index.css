@@ -40,7 +40,8 @@
 } */
 
 body {
-    background-image: url("../images/premium_photo-1667689956673-8737a299aa8c.avif");
+    /* background-image: url("../images/premium_photo-1667689956673-8737a299aa8c.avif");
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+    background-color: black !important;
 }
