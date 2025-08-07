@@ -1,7 +1,7 @@
 import { BufferGeometry, MeshLambertMaterial, BufferAttribute, Mesh, MeshStandardMaterial } from "three"
 import { DoubleSide } from 'three'
 import { Canvas, extend, useFrame } from '@react-three/fiber';
-import { Html, useTexture } from '@react-three/drei';
+import { Html, useTexture ,Cloud } from '@react-three/drei';
 import { useRef, useState } from "react";
 import { Fog, FogExp2 } from 'three';
 import { texture } from "three/tsl";
@@ -27,63 +27,63 @@ extend({ Fog, FogExp2 });
 //         </mesh>
 //     )
 // }
-function Clouds() {
+function Clouds({position, opacity, speed, width, depth, segments ,className}) {
 
-    const [rot, setRot] = useState(Math.random() * 300)
+    // const [rot, setRot] = useState(Math.random() * 300)
 
-    let arr = []
-    for (let i = 0; i < 90; i++) {
-        let num = i
-        arr.push(
+    // let arr = []
+    // for (let i = 0; i < 90; i++) {
+    //     let num = i
+    //     arr.push(
 
-            [Math.random() * 1000 - 500, Math.random() * 1000 - 500, Math.random() * 1000 - 100]
+    //         [Math.random() * 1000 - 500, Math.random() * 1000 - 500, Math.random() * 1000 - 100]
 
-        )
-    }
-    let meshRef = useRef(null)
-    function Custom() {
-        const texture = useTexture('../images/images (1).jfif');
+    //     )
+    // }
+    // let meshRef = useRef(null)
+    // function Custom() {
+    //     const texture = useTexture('../images/images (1).jfif');
         // console.log(arr)
-        useFrame(({ clock }) => {
-            if (meshRef.current) {
-                for (let i = 0; i < arr.length; i++) {
+        // useFrame(({ clock }) => {
+        //     if (meshRef.current) {
+        //         for (let i = 0; i < arr.length; i++) {
                     //   if(meshRef==i){
                     // i.current.rotation.z += Math.random() * 0.12
                     // setRot((prev) => prev + clock.getDelta() * 0.01)
-                }
+                // }
                 // console.log(rot)
                 // meshRef.current.rotation.z += clock.getDelta() * 0.12
                 // meshRef.current.position.y = Math.random() * 1000 - 500
                 // meshRef.current.position.z = Math.random() * 1000 - 100
-            }
-        })
+        //     }
+        // })
         // console.log(rot)
-        return (
-            <>
+        // return (
+        //     <>
                 {/* {console.log(arr)} */}
-                {arr.length > 80 && arr.map((v, i) =>
-                    <mesh ref={meshRef} key={i} position={v} rotateZ={rot}>
-                        <hemisphereLight intensity={1} color={[0xd6e6ff, 0xa38c08]} />
-                        <planeGeometry scale={[2, 2, 2]} >
-                            <meshLambertMaterial transparent={true} opacity={0.5} map={texture} />
-                        </planeGeometry>
+                // {arr.length > 80 && arr.map((v, i) =>
+                //     <mesh ref={meshRef} key={i} position={v} rotateZ={rot}>
+                //         <hemisphereLight intensity={1} color={[0xd6e6ff, 0xa38c08]} />
+                //         <planeGeometry scale={[2, 2, 2]} >
+                //             <meshLambertMaterial transparent={true} opacity={0.5} map={texture} />
+                //         </planeGeometry>
                         {/* <Html>
                                 <h1 style={{ color: 'white' }}>{v}</h1>
                             </Html> */}
-                    </mesh >
-                )}
-            </>
-        )
-    }
-    const particlecount = 5000
-    const posArray = new Float32Array(particlecount * 3)
-    for (let i = 0; i < particlecount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 16
-    }
+    //                 </mesh >
+    //             )}
+    //         </>
+    //     )
+    // }
+    // const particlecount = 5000
+    // const posArray = new Float32Array(particlecount * 3)
+    // for (let i = 0; i < particlecount * 3; i++) {
+    //     posArray[i] = (Math.random() - 0.5) * 16
+    // }
     return (
         <>
-            <Canvas  >
-                {/* <ambientLight intensity={4.5} /> */}
+            {/* <Canvas className={className}  style={{position:'absolute', zIndex:'1'}}> */}
+                <ambientLight intensity={4.5} />
                 {/* <mesh>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="orange" />
@@ -91,18 +91,20 @@ function Clouds() {
                 {/* <fogExp2 attach="fog" args={['#cccccc', 0.05]} /> */}
                 {/* <fogExp2 attach="fog" args={['#a74aff', 1.5, 10, 50]} /> */}
                 {/* <Custom /> */}
-                <mesh>
-                    <bufferGeometry >
+                <mesh >
+                    {/* <bufferGeometry >
                         <BufferAttribute
                             attach='attributes-position'
                             array={posArray}
                             count={3}
                             itemSize={3}
                         />
-                    </bufferGeometry>
-                    <pointsMaterial map={texture} transparent alphaTest={0.5} size={0.5} />
+                    </bufferGeometry> */}
+                          <Cloud position={position} opacity={opacity} speed={speed} width={width} depth={depth} 
+                          segments={segments}  />
+                    {/* <pointsMaterial map={texture} transparent alphaTest={0.5} size={0.5} /> */}
                 </mesh>
-            </Canvas>
+            {/* </Canvas> */}
         </>
     )
 }

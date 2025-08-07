@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .blueTextColor {
-    color: #a3bacd !important;
+    color: #7a9ebd !important;
 }
 
 .blueLogoColor {
@@ -40,8 +40,21 @@
 } */
 
 body {
-    /* background-image: url("../images/premium_photo-1667689956673-8737a299aa8c.avif");
+    background-image: url("../images/istockphoto-1429064773-612x612.jpg");
     background-size: cover;
-    background-repeat: no-repeat; */
-    background-color: black !important;
+    background-repeat: no-repeat;
+    /* background-color: black !important; */
+}
+
+.navbar {
+    position: sticky !important;
+    top: 10px !important;
+    /* bottom: 10; */
+
+}
+
+.position {
+    position: 'absolute';
+    top: 60px;
+    z-index: 1;
 }
