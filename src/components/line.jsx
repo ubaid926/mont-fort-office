@@ -2,7 +2,7 @@ import { BoxGeometry } from "three"
 import { Line } from '@react-three/drei';
 import fragment from "../fragment";
 
-function Lines({ positionVal, clr }) {
+function Lines({ positionVal, clr, linew }) {
     const Particles = () => {
         const positions = new Float32Array([
             0, 0, 1, // Point 1 (x, y, z)
@@ -35,7 +35,11 @@ function Lines({ positionVal, clr }) {
                 <boxGeometry args={[10,10,10]}/>
                 <meshBasicMaterial color={'white'} />
                 </mesh> */}
-                <Line points={points} color={clr ? clr : 'red'} lineWidth={1} position={positionVal} shadowSide={[0, 11, 12]} fragmentShader={fragment} />
+                <Line points={points}
+                    // color={clr ? clr : 'red'}
+                    lineWidth={linew} position={positionVal}
+                    fragmentShader={fragment}
+                />
             </>
         )
     }
