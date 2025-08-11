@@ -11,9 +11,10 @@ import { cameraPosition } from 'three/tsl';
 import { Fog, FogExp2 } from 'three';
 import vertex from '../vertex';
 import fragment from '../fragment';
+import { Physics } from '@react-three/cannon';
 extend({ Fog, FogExp2 });
 function First3dsection() {
-    const [lineWidth, setLineWidth] = useState(0)
+    const [lineWidth, setLineWidth] = useState(1)
     const { camera, viewport } = useThree()
     // function MyPointLight() {
     //     const hemisphereLightRef = useRef();
@@ -52,29 +53,33 @@ function First3dsection() {
             <directionalLight position={[5, 5, 5]} intensity={1} />
             {/* <pointLight  position={[10, 10, 10]} intensity={1} color="red" /> */}
 
-            <Model />
+            {/* <Model /> */}
             {/* <mesh>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="orange" />
           </mesh> */}
-            <Lines clr='red' positionVal={[-4, 5, 2]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-9, 5, 0.5]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-4, 5, 3]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-6, 5, -4]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-4, 5, -3]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-4, 5, -1]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-4, 5, 1]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-7, 5, 3]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-5, 5, 3]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-8, 5, 0]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-7, 5, -2]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-6, 5, -3]} linew={lineWidth} />
-            <Lines clr='' positionVal={[-7, 5, 1]} linew={lineWidth} />
+            <Physics>
+                {/* {!lineWidth && */}
+                {/* <Lines clr='red' positionVal={[-4, 5, 2]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-9, 5, 0.5]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-4, 5, 3]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-6, 5, -4]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-4, 5, -3]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-4, 5, -1]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-4, 5, 1]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-7, 5, 3]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-5, 5, 3]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-8, 5, 0]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-7, 5, -2]} linew={lineWidth} />
+                <Lines clr='' positionVal={[-6, 5, -3]} linew={lineWidth} /> */}
+                <Lines clr='' positionVal={[-7, 5, 1]} linew={lineWidth} />
+                {/* } */}
+            </Physics>
             <OrbitControls onChange={() => {
                 if ((camera.position.x < 5.916367563079498 && camera.position.z < -3.6050790363791965) && (camera.position.x > 4.333242551233696 && camera.position.z > -5.4058310177231474
                 )) {
-                    setLineWidth(1)
-                    
+                    // setLineWidth(1)
+
                 }
                 // else if(
                 //      ( camera.position.x > 5.916367563079498 && camera.position.z > -3.6050790363791965) ){
@@ -87,13 +92,13 @@ function First3dsection() {
                 // }
                 else {
                     if (lineWidth) {
-                        setLineWidth(0)
+                        // setLineWidth(0)
                     }
                 }
                 //   console.log(camera.position)
 
             }}
-                // minDistance={8} maxDistance={8}
+                minDistance={-48} maxDistance={28}
                 // minPolarAngle={Math.PI / 3}
                 // maxPolarAngle={Math.PI / 3}
                 // minAzimuthAngle={Math.PI / 3}

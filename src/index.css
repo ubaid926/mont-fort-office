@@ -40,10 +40,10 @@
 } */
 
 body {
-    background-image: url("../images/istockphoto-1429064773-612x612.jpg"); 
+    /* background-image: url("../images/istockphoto-1429064773-612x612.jpg"); 
     background-size: cover;
-    background-repeat: no-repeat; 
-    /* background-color: black !important; */
+    background-repeat: no-repeat;  */
+    background-color: black !important;
 }
 
 .navbar {
