@@ -27,7 +27,7 @@ extend({ Fog, FogExp2 });
 //         </mesh>
 //     )
 // }
-function Clouds({ position, opacity, speed, width, depth, segments, className, disp }) {
+function Clouds({ position, opacity, speed, width, depth, segments, className, disp ,scale }) {
 
     // const [rot, setRot] = useState(Math.random() * 300)
 
@@ -83,7 +83,6 @@ function Clouds({ position, opacity, speed, width, depth, segments, className, d
     return (
         <>
             {/* <Canvas className={className}  style={{position:'absolute', zIndex:'1'}}> */}
-            <ambientLight intensity={1} />
             {/* <mesh>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="orange" />
@@ -92,6 +91,7 @@ function Clouds({ position, opacity, speed, width, depth, segments, className, d
             {/* <fogExp2 attach="fog" args={['#a74aff', 1.5, 10, 50]} /> */}
             {/* <Custom /> */}
             <mesh >
+            <ambientLight intensity={1.5} />
                 {/* <bufferGeometry >
                         <BufferAttribute
                             attach='attributes-position'
@@ -100,7 +100,7 @@ function Clouds({ position, opacity, speed, width, depth, segments, className, d
                             itemSize={3}
                         />
                     </bufferGeometry> */}
-                <Cloud position={position} opacity={opacity} speed={speed} width={width} depth={depth}
+                <Cloud position={position} scale={scale} opacity={opacity} speed={speed} width={width} depth={depth}
                     segments={segments} />
                 {/* <pointsMaterial map={texture} transparent alphaTest={0.5} size={0.5} /> */}
             </mesh>
