@@ -41,7 +41,7 @@ function Lines({ positionVal, clr, linew, pos }) {
                         ref.current.position.y += 0.009
                         setState(ref.current.position.y)
                         // console.log('minus ---', ref.current.position.y)
-                        if (ref.current.position.y == 18) {
+                        if (ref.current.position.y == 38) {
                             // console.log('stop')
                             break;
                         }

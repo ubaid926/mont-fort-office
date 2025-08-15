@@ -91,7 +91,7 @@ function Clouds({ position, opacity, speed, width, depth, segments, className, d
             {/* <fogExp2 attach="fog" args={['#a74aff', 1.5, 10, 50]} /> */}
             {/* <Custom /> */}
             <mesh >
-            <ambientLight intensity={1.5} />
+            {/* <ambientLight intensity={1.5} /> */}
                 {/* <bufferGeometry >
                         <BufferAttribute
                             attach='attributes-position'

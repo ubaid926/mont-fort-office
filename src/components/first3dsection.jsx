@@ -3,7 +3,7 @@ import { CameraControls, OrbitControls, useHelper, useTexture } from '@react-thr
 import { useLoader, extend } from '@react-three/fiber';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import Clouds from './clouds'
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { RectAreaLightHelper } from 'three/examples/jsm/Addons.js';
 import { HemisphereLightHelper } from 'three';
 import Lines from './line';
@@ -31,14 +31,14 @@ function First3dsection() {
         // console.log(far,'far')
         if (
             // window.scrollY <= 300 &&
-            currentScrollY > lastScrollY ) {
+            currentScrollY > lastScrollY) {
             // if (far) {
             //     if (far < 20) {
             //         setFar(far + 0.1)
             // console.log('current', currentScrollY)
-            console.log('last')
-            console.log(currentScrollY)
-            console.log(lastScrollY)
+            // console.log('last')
+            // console.log(currentScrollY)
+            // console.log(lastScrollY)
             // }
             // else {
             //     if (far > 10) {
@@ -48,19 +48,19 @@ function First3dsection() {
 
         }
         // }
-        else  if (currentScrollY < lastScrollY
+        else if (currentScrollY < lastScrollY
             // && currentScrollY < 300
             // && far > 10
         ) {
 
             // setFar(far - 0.1)
-            console.log('minus', far)
+            // console.log('minus', far)
         }
         lastScrollY = currentScrollY;
-        
+
     }
     )
-    function Model() {
+    const Model = function () {
         const { scene } = useLoader(GLTFLoader, '../models/snowy_mountain_terrain/scene.gltf');
         // scene.traverse((child) => {
         //     if (child) {
@@ -70,14 +70,19 @@ function First3dsection() {
         return <primitive object={scene} />
     }
 
+    // const Model=useMemo(()=>ModelComp() ,[]) 
+
     if (lineWidth) {
         linePos = true
     }
+    const [cameraPos, setCameraPos] = useState(0)
     return (
         <>
-            <ambientLight intensity={1} position={[5, 5, 5]} />
-            <directionalLight position={[5, 5, 5]} intensity={1} />
+            <ambientLight intensity={lineWidth ? 2 : 3} position={[5, 5, 5]} />
+            {!lineWidth && <directionalLight position={[5, 5, 5]} intensity={1} />
+            }
             <Model />
+            {/* <Clouds scale={lineWidth?[1,1,1]:[1,1,8]} position={lineWidth?[4, 3, 1] : [4, 0, 0]} opacity={lineWidth ? 0.01 : 0.6} speed={lineWidth? 0 :0.4} width={window.innerWidth / window.innerHeight} depth={lineWidth ? 0.9 : 2} segments={lineWidth ? 50 : 100} /> */}
             {lineWidth &&
                 <>
                     <EffectComposer>
@@ -96,54 +101,68 @@ function First3dsection() {
                         <Lines clr='' positionVal={[-7, -5, 1]} linew={lineWidth} pos={linePos} />
                         <Lines clr='' positionVal={[-7, -5, 1]} linew={lineWidth} pos={linePos} />
                         <Bloom
-                            intensity={0.1} 
-                            blurPass={undefined} 
-                            kernelSize={KernelSize.LARGE} 
-                            luminanceThreshold={0.4} 
-                            luminanceSmoothing={0.025} 
-                            mipmapBlur={true} 
+                            intensity={0.1}
+                            blurPass={undefined}
+                            kernelSize={KernelSize.LARGE}
+                            luminanceThreshold={0.4}
+                            luminanceSmoothing={0.025}
+                            mipmapBlur={true}
                             resolutionX={Resolution.AUTO_SIZE}
-                            resolutionY={Resolution.AUTO_SIZE} 
+                            resolutionY={Resolution.AUTO_SIZE}
+
                         />
+                        {/* <Clouds scale={[1,1,11]} position={[0, 2, 0] }  speed={0.4} width={100}  segments={ 10} /> */}
                     </EffectComposer>
                 </>
             }
             <OrbitControls onChange={() => {
-                if (
-                    (camera.position.x < 6.806021618585722 && camera.position.z < -5.355190914182591) &&
-                    (camera.position.x > 3.856138425454241 && camera.position.z > -7.754366282536264
-                    )) {
+                // console.log(camera)
+                //  setCameraPos(cameraPos-0.1) 
+                if
+                    (camera.position.x < 6.806021618585722 && camera.position.z < -5.355190914182591)
+                // &&
+                // (camera.position.x > 3.856138425454241 && camera.position.z > -7.754366282536264)
+                {
                     setLineWidth(1)
+                    setCameraPos(()=>cameraPos+0.01)
+                    // setCameraPos(0.7)
+                    camera.position.x-=cameraPos
+                    // camera.zoo=cameraPos
                 }
-                else {
-                    if (lineWidth) {
-                        setLineWidth(0)
+
+                else if (camera.position.x > 6.806021618585722 && camera.position.z > -8.355190914182591) {
+                //     console.log("working")
+                    setLineWidth(0)
+                //     setCameraPos(10)
+                }
+                else if (camera.position.x < 6.806021618585722) {
+                    if (cameraPos) {
+                        // setCameraPos(0)
                     }
                 }
-                if (
-                    camera.position.x < 3.2737044196112337 && camera.position.z > -8.017659220309744) {
-                }
             }}
-                minDistance={!far ? 10 : far}
-                maxDistance={!far ? 10 : far}
+                minDistance={10}
+                maxDistance={10}
                 minPolarAngle={Math.PI / 3}
                 maxPolarAngle={Math.PI / 3}
-                minAzimuthAngle={Math.PI / 3}
-                maxAzimuthAngle={Math.PI / 4}
+                // minPolarAngle={Math.PI / 3}
+                // maxPolarAngle={Math.PI / 3}
+                // minAzimuthAngle={cameraPos?Math.PI/1:Math.PI / 1}
+                // maxAzimuthAngle={cameraPos?Math.PI/1:Math.PI / 1}
                 rotateSpeed={0.3}
                 enableZoom={false}
             />
-         
-            <Clouds scale={[1,1,8]} position={lineWidth ? [4, 3, 8] : [2, 1, 4]} opacity={lineWidth ? 0.04 : 0.3} speed={0.4} width={window.innerWidth / window.innerHeight} depth={lineWidth ? 0.9 : 2} segments={lineWidth ? 50 : 100} />
-      
+
+
+
             {/* { */}
-                {/* <> */}
+            {/* <> */}
             {/* condition */}
-                {/* <Clouds position={[6, 1, -2] } scale={[1,1,11]} opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
+            {/* <Clouds  scale={[1,1,11]} position={lineWidth? [0, 0, 4]:[-3, 1, -2] } opacity={ lineWidth ? 0.01 : 0.3} speed={lineWidth? 0 :0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
             {/* <Clouds position={[6, -1, 0] } opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} />
             <Clouds position={[6, -1, 5] } opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
             {/* </> */}
-{/* } */}
+            {/* } */}
         </>
     );
 }

@@ -31,10 +31,11 @@ function App() {
       // }}
       >
         <AppNavbar />
-        <Canvas camera={{ position: [9, -2, 2]}} >
-          <EffectComposer>
+        {/* <Canvas camera={{ position: [9, -2, 2]}} > */}
+        <Canvas camera={{ position: [0, 0, 0]}} >
+         
             <First3dsection />
-          </EffectComposer>
+          
         </Canvas>
 
 
