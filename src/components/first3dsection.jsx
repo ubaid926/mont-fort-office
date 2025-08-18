@@ -1,4 +1,4 @@
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { CameraControls, OrbitControls, useHelper, useTexture } from '@react-three/drei';
 import { useLoader, extend } from '@react-three/fiber';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -18,12 +18,25 @@ import { BlurPass, Resizer, KernelSize, Resolution } from 'postprocessing'
 import { Bloom } from '@react-three/postprocessing'
 extend({ Fog, FogExp2 });
 function First3dsection() {
+    const [cameraPos, setCameraPos] = useState(false)
     const [far, setFar] = useState(10)
     let linePos = false
     const [lineWidth, setLineWidth] = useState(0)
     const { camera, viewport } = useThree()
 
     let lastScrollY = 0;
+    useFrame(() => {
+        if (cameraPos && camera.position.x < 5.560083201835774 && camera.position.x > -8.383379965915095 && camera.position.z < -6.026728049467684 && camera.position.z > -10.102960091440439) {
+            // for (let i=0; i<80; i++){
+            camera.position.z -= 0.09
+            if (camera.position.y > 4) {
+                camera.position.y -= 0.09
+            }
+            //  camera.position.x-=0.01
+            // console.log('working', camera.position.y)
+            //   }
+        }
+    })
     // console.log(window.scrollY, 'scroll')
 
     window.addEventListener("scroll", () => {
@@ -75,15 +88,15 @@ function First3dsection() {
     if (lineWidth) {
         linePos = true
     }
-    const [cameraPos, setCameraPos] = useState(0)
+
     return (
         <>
             <ambientLight intensity={lineWidth ? 2 : 3} position={[5, 5, 5]} />
             {!lineWidth && <directionalLight position={[5, 5, 5]} intensity={1} />
             }
             <Model />
-            {/* <Clouds scale={lineWidth?[1,1,1]:[1,1,8]} position={lineWidth?[4, 3, 1] : [4, 0, 0]} opacity={lineWidth ? 0.01 : 0.6} speed={lineWidth? 0 :0.4} width={window.innerWidth / window.innerHeight} depth={lineWidth ? 0.9 : 2} segments={lineWidth ? 50 : 100} /> */}
-            {lineWidth &&
+         {!lineWidth &&   <Clouds scale={lineWidth?[1,1,1]:[1,1,8]} position={lineWidth?[4, 3, 1] : [4, 0, 0]} opacity={lineWidth ? 0.01 : 0.6} speed={lineWidth? 0 :0.4} width={window.innerWidth / window.innerHeight} depth={lineWidth ? 0.9 : 2} segments={lineWidth ? 50 : 100} />
+          }  {lineWidth &&
                 <>
                     <EffectComposer>
                         <Lines clr='' positionVal={[-4, -5, 2]} linew={lineWidth} pos={linePos} />
@@ -116,7 +129,7 @@ function First3dsection() {
                 </>
             }
             <OrbitControls onChange={() => {
-                // console.log(camera)
+                // console.log(camera.position)
                 //  setCameraPos(cameraPos-0.1) 
                 if
                     (camera.position.x < 6.806021618585722 && camera.position.z < -5.355190914182591)
@@ -124,16 +137,27 @@ function First3dsection() {
                 // (camera.position.x > 3.856138425454241 && camera.position.z > -7.754366282536264)
                 {
                     setLineWidth(1)
-                    setCameraPos(()=>cameraPos+0.01)
+                    // setCameraPos(() => 0.01)
                     // setCameraPos(0.7)
-                    camera.position.x-=cameraPos
+                    if (camera.position.x < -0.631227735925021) {
+                        setCameraPos(true)
+                        // for (let i=0; i<20; i++){
+                        // camera.position.z -= cameraPos
+                        // camera.position.set(camera.position.x, camera.position.y, camera.position.z-cameraPos );
+                        // console.log('working')
+
+
+                        // }
+                        // camera.position.x -= cameraPos
+                    }
                     // camera.zoo=cameraPos
                 }
 
                 else if (camera.position.x > 6.806021618585722 && camera.position.z > -8.355190914182591) {
-                //     console.log("working")
+                    //     console.log("working")
                     setLineWidth(0)
-                //     setCameraPos(10)
+                    setCameraPos(false)
+                    //     setCameraPos(10)
                 }
                 else if (camera.position.x < 6.806021618585722) {
                     if (cameraPos) {
@@ -142,15 +166,17 @@ function First3dsection() {
                 }
             }}
                 minDistance={10}
-                maxDistance={10}
-                minPolarAngle={Math.PI / 3}
-                maxPolarAngle={Math.PI / 3}
-                // minPolarAngle={Math.PI / 3}
-                // maxPolarAngle={Math.PI / 3}
-                // minAzimuthAngle={cameraPos?Math.PI/1:Math.PI / 1}
-                // maxAzimuthAngle={cameraPos?Math.PI/1:Math.PI / 1}
+                maxDistance={50}
+                minPolarAngle={cameraPos ? Math.PI / 3 : Math.PI / 3}
+                maxPolarAngle={cameraPos ? Math.PI / 2.5 : Math.PI / 3}
+                // minAzimuthAngle={Math.PI / 3}
+                // maxAzimuthAngle={Math.PI / 1}
                 rotateSpeed={0.3}
                 enableZoom={false}
+                // enablePan={false}
+                enableDamping={false}
+
+
             />
 
 
@@ -159,8 +185,8 @@ function First3dsection() {
             {/* <> */}
             {/* condition */}
             {/* <Clouds  scale={[1,1,11]} position={lineWidth? [0, 0, 4]:[-3, 1, -2] } opacity={ lineWidth ? 0.01 : 0.3} speed={lineWidth? 0 :0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
-            {/* <Clouds position={[6, -1, 0] } opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} />
-            <Clouds position={[6, -1, 5] } opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
+            {/* {/* <Clouds position={[6, -1, 0] } opacity={ 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={  2} segments={ 100} /> */}
+            <Clouds position={lineWidth?[6, 0, 5]:[6, -1, 5] } opacity={ lineWidth?0.5: 0.5} speed={0.4} width={window.innerWidth / window.innerHeight} depth={lineWidth?1:2} segments={ 100} /> 
             {/* </> */}
             {/* } */}
         </>

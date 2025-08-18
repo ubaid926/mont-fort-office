@@ -32,7 +32,7 @@ function App() {
       >
         <AppNavbar />
         {/* <Canvas camera={{ position: [9, -2, 2]}} > */}
-        <Canvas camera={{ position: [0, 0, 0]}} >
+        <Canvas camera={{ position: [5, 1, 0]}} >
          
             <First3dsection />
           

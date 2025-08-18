@@ -36,16 +36,16 @@ function Lines({ positionVal, clr, linew, pos }) {
 
             useFrame(() => {
 
-                if (ref.current.position.y >= -5 && ref.current.position.y < 0) {
-                    for (let i = 0; i < 50; i++) {
-                        ref.current.position.y += 0.009
-                        setState(ref.current.position.y)
-                        // console.log('minus ---', ref.current.position.y)
-                        if (ref.current.position.y == 38) {
+                if (ref.current.position.y >= -5 && ref.current.position.y < 4) {
+                    // for (let i = 0; i < 180; i++) {
+                        ref.current.position.y += 0.9
+                        // setState(ref.current.position.y)
+                        // console.log('minus ---',ref.current.position.y)
+                        // if (ref.current.position.y == -3) {
                             // console.log('stop')
-                            break;
-                        }
-                    }
+                            // break;
+                        // }
+                    // }
                 }
                 //  else if (ref.current.position.y >= 5 && ref.current.position.y > 0) {
                 //     for (let i = 0; i < 20; i++) {
